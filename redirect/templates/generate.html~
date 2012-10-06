@@ -1,0 +1,19 @@
+{% extends 'generate_base.html' %}
+
+{% block content %}
+    <div>
+        <label for="public-link">Public link</label>
+        <input type="text" value="" />
+    </div>
+    {% for i in max_encoded_range %}
+        <div class="encrypted-block">
+            <label for="link-to-encode-{{forloop.counter}}">Link to encode</label>
+            <input type="text" id="link-to-encode-{{forloop.counter}}" value="" />
+            <label for="key-sequence-{{forloop.counter}}">Link to encode</label>
+            <input type="text" id="key-sequence-{{forloop.counter}}" value="" />
+            <div class="activation-link-label">Activation Link</div>
+            <div class="activation-link"></div>
+        </div>
+    {% endfor %}
+    
+{% endblock %}
