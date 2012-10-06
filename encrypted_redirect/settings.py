@@ -56,11 +56,11 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '%(PROGECT_ROOT)s/public/media/'
+STATIC_ROOT = '%(PROGECT_ROOT)s/public/redirect/media/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = '/media/redirect/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -83,7 +83,7 @@ SECRET_KEY = '*-31=g0dzw7a-zsj=p)q9y4&amp;o_chaq2b1jyr27w%oi+-!cu6=^'
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
+#    'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -103,9 +103,7 @@ ROOT_URLCONF = 'encrypted_redirect.urls'
 WSGI_APPLICATION = 'encrypted_redirect.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    '%(PROGECT_ROOT)s/templates/redirect/',
 )
 
 INSTALLED_APPS = (
