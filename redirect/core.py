@@ -1,5 +1,8 @@
 from base64 import urlsafe_b64encode, urlsafe_b64decode
 from Crypto.Cipher import AES
+from Crypto.Util.randpool import RandomPool
+
+key_generator = RandomPool()
 
 def decrypt_and_select_url(urls, cell, password):    
     """
@@ -25,13 +28,27 @@ def encrypt_urls(url_password_pairs):
     encrypted_urls = []
     for pair in url_password_pairs:
         if pair[1]:
-            try:
-                encrypter = AES.new(pair[1])
-                encrypted_urls.append(encrypter.encrypt(extend_for_encryption(pair[0])))
-            except ValueError:
-                encrypted_urls.append(pair[0])
+            encrypter = AES.new(pair[1])
+            encrypted_urls.append(encrypter.encrypt(_extend_for_encryption(pair[0])))
         else:
             encrypted_urls.append(pair[0])
     return tuple(urlsafe_b64encode(url) for url in encrypted_urls)
-            
+
+def generate_key(length=16):
+    if length % 16:
+        raise ValueError('`length` must be a multiple of 16')
+    return key_generator.get_bytes(length)
+
+def _extend_for_encryption(original_message):
+    """
+    'original_message' is human-readable line. Method adds whitespaces to the right of it.
+    """
+    length_to_be = int(len(original_message) / 16)
+    if len(original_message) % 16:
+        length_to_be = length_to_be + 1
+    return original_message.ljust(length_to_be * 16)
+
+
+
+
    
