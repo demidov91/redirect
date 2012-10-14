@@ -11,14 +11,14 @@ def decrypt_and_select_url(urls, cell, password):
      to indicate if it was bad attempt to decrypt some url  
     """
     aes_url = urls[cell]
-    aes_url = urlsafe_b64decode()
+    aes_url = urlsafe_b64decode(aes_url)
     if cell == 0:
         return {'success':True, 'url':aes_url}
     default_url = urlsafe_b64decode(urls[0])
-    decrypter = AES.new(password)
     try:
-        return  {'sucess': True,'url':decrypter.decrypt(aes_url)}
-    except ValueError:
+        decrypter = AES.new(password)
+        return  {'success': True,'url':decrypter.decrypt(aes_url)}
+    except (ValueError, TypeError):
         return {'success':False, 'url':default_url}  
     
 def encrypt_urls(url_password_pairs):

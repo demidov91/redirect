@@ -1,12 +1,7 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
+# -*- coding:utf-8 -*-
 
 from django.test import TestCase
-from core import encrypt_urls, generate_key, _extend_for_encryption
+from core import encrypt_urls, generate_key, _extend_for_encryption, decrypt_and_select_url
 from base64 import urlsafe_b64encode
 from Crypto.Cipher import AES
 
@@ -58,4 +53,31 @@ class TestEncrypt(TestCase):
             encrypter = AES.new(compare[0][1])
             self.assertEqual(urlsafe_b64encode(encrypter.encrypt(compare[0][0])), compare[1])
     def test_encrypt_and_simple(self):
-        pass
+        pairs_to_encrypt = (
+            ('http://newsbelarus.net/привет/', '1234567890123456'),
+            ('https://some url', ''),        
+        )
+        encrypted = encrypt_urls(pairs_to_encrypt)
+        encrypter = AES.new(pairs_to_encrypt[0][1])
+        right_answers = (encrypter.encrypt('http://newsbelarus.net/привет/            '), 'https://some url')
+        right_answers = tuple(urlsafe_b64encode(url) for url in right_answers)
+        self.assertEqual(len(encrypted), 2)
+        for compare in zip(right_answers, encrypted):
+            self.assertEqual(compare[0], compare[1])
+            
+class TestDecrypt(TestCase):
+    def test_pure_url(self):
+        decryption_result = decrypt_and_select_url(('aHR0cDovL25ld3NiZWxhcnVzLm5ldCAgICAgICAgICA=',), 0, None)
+        self.assertEqual(decryption_result['success'], True)
+        self.assertEqual(decryption_result['url'], 'http://newsbelarus.net          ')
+        
+    def test_select_pure_url_instead_of_other(self):
+        decryption_result = decrypt_and_select_url(('aHR0cDovL25ld3NiZWxhcnVzLm5ldCAgICAgICAgICA=','tU_Sgy-3LHNZkbwAw-Tclg=='), 1, None)
+        self.assertEqual(decryption_result['success'], False)
+        self.assertEqual(decryption_result['url'], 'http://newsbelarus.net          ')
+        
+    def test_decrypt_second(self):
+        decryption_result = decrypt_and_select_url(('aHR0cDovL25ld3NiZWxhcnVzLm5ldCAgICAgICAgICA=','tU_Sgy-3LHNZkbwAw-Tclg=='), 1, '1234567890123456')
+        self.assertEqual(decryption_result['success'], True)
+        self.assertEqual(decryption_result['url'], 'tut.by          ')
+        
