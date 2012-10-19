@@ -1,0 +1,35 @@
+#all-workspace input{height:2em; display:block;}
+#link-password-pairs>div{padding:1em;}
+#add-url-to-encrypt{margin:1em auto; display:block;}
+#link-password-pairs input{width:100%;}
+#link-password-pairs{margin-top:2em;}
+.clear{clear:both;}
+#url-password-template{display:none;}
+.clickable{cursor:pointer;}
+#left,#center,#right{float:left;margin:auto 1%;}
+#left{width:33%;}
+#center{width:33%;}
+#right{width:28%;}
+#all-workspace .dot-password{display:block;}
+#all-workspace .text-password{display:none;}
+#all-workspace.show-password .dot-password{display:none;}
+#all-workspace.show-password .text-password{display:block;}
+#all-workspace #show-passwords{display:block;}
+#all-workspace #hide-passwords{display:none;}
+#all-workspace.show-password #show-passwords{display:none;}
+#all-workspace.show-password #hide-passwords{display:block;}
+#right button{margin:1em auto;width:11em;display:block;}
+.password{float:left;}
+.generate-new-password,.clear-locally{width:31%;margin-left:2%;} 
+.get-activation-link{width:66%;float:left;}
+.activation-url{display:none;}
+#left .btn{height:2.43em;}
+#top,#center{text-align:center;}
+#public-url{width:100%;}
+#center>#result-url{display:block;}
+#result-url textarea{width:100%;}
+#center>div{display:none;}
+#public-url-wrapper{padding:1em;background-color: rgba(100, 100, 100, 0.2);border-radius: 0.3em;}
+.right{float:right;}
+.center{text-align:center;}
+#public-url-wrapper .get-activation-link{width:100%;float:none;}
