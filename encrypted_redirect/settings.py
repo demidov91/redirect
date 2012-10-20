@@ -56,11 +56,11 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '%(PROGECT_ROOT)s/public/redirect/media/'
+STATIC_ROOT = '%(PROJECT_ROOT)s/public/redirect/media/' % locals()
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/media/redirect/static/'
+STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -77,13 +77,12 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '*-31=g0dzw7a-zsj=p)q9y4&amp;o_chaq2b1jyr27w%oi+-!cu6=^'
+
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-#    'django.template.loaders.app_directories.Loader',
+#    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -102,9 +101,6 @@ ROOT_URLCONF = 'encrypted_redirect.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'encrypted_redirect.wsgi.application'
 
-TEMPLATE_DIRS = (
-    '%(PROGECT_ROOT)s/templates/redirect/',
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -139,3 +135,5 @@ LOGGING = {
     'loggers': {        
         },
 }
+
+from local_settings import *

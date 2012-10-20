@@ -23,7 +23,7 @@ function genPasswordClick(sender){
         text += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
     }
     $(sender).siblings('.password').val(text)
-    wasEdited(sender)
+    passwordChanged($(sender).siblings('.password')[0])
 }
 
 function refreshResultUrl(){
@@ -57,12 +57,12 @@ function addUrlForm(){
     if($('#link-password-pairs>*').length==5){
         $('#add-url-to-encrypt').css('display', 'none')
     }
-    $('#link-password-pairs>div:last-child>input.text-password').change(function(){
+    /*$('#link-password-pairs>div:last-child>input.text-password').change(function(){
         $('#link-password-pairs>div:last-child>input.dot-password').val($('#link-password-pairs>div:last-child>input.text-password').val())
     })
     $('#link-password-pairs>div:last-child>input.dot-password').change(function(){
         $('#link-password-pairs>div:last-child>input.text-password').val($('#link-password-pairs>div:last-child>input.dot-password').val())
-    })
+    })*/
     $('#link-password-pairs>div:last-child').data('index', $('#link-password-pairs>div').length)
     $('#link-password-pairs>div:last-child>.get-activation-link').click(function(){
         $('#activation-link textarea').text(activationUrlStart + getActivationLink($(this).parent()))
@@ -82,8 +82,9 @@ function getActivationLink(linkBlock){
     return linkBlock.data('index') + '/' + linkBlock.children('.dot-password').val() + '/'
 }
 
-function passwordChaged(sender){
+function passwordChanged(sender){
     $('#save-settings, #restore-settings').attr('disabled', false)
+    $(sender).siblings('.password').val(sender.value)
     wasEdited(sender)
     showResultUrlBlock()
 }
